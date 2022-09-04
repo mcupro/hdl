@@ -79,27 +79,21 @@ module system_top (
   inout   [ 3:0]  gpio_ctl,
   inout   [ 7:0]  gpio_status,
 
-  output          spi_csn,
-  output          spi_clk,
-  output          spi_mosi,
-  input           spi_miso,
-  output          VCRX1_H,
-  output          VCRX1_L,
-  output          VCTX1_H,
-  output          VCTX1_L,
-  output          VCRX2_H,
-  output          VCRX2_L,
-  output          VCTX2_H,
-  output          VCTX2_L,
+  output          spi_csn , 
+  output          spi_clk , 
+  output          spi_mosi , 
+  input           spi_miso ,
+  output          tx1_en , tx2_en , sel_clk_src
   
-  // output          ltc2630_mosi_0,
-  // output          ltc2630_ncs_0,
-  // output          ltc2630_sclk_0,
+  );
 
-  output          pl_spi_clk_o,
-  output          pl_spi_mosi,
-  input           pl_spi_miso);
 
+assign {tx1_en,tx2_en,sel_clk_src} = 3'b111  ;
+
+  wire          pl_spi_clk_o ;
+  wire          pl_spi_mosi ;
+  wire          pl_spi_miso ;
+  
   // internal signals
 
   wire    [24:0]  gpio_i;
@@ -118,15 +112,7 @@ module system_top (
               gpio_status}));     //  7: 0
 
   assign gpio_i[24:14] = gpio_o[24:14];
-  assign VCRX1_H=gpio_o[17];
-  assign VCRX1_L=gpio_o[18];
-  assign VCTX1_H=gpio_o[19];
-  assign VCTX1_L=gpio_o[20];
-  assign VCRX2_H=gpio_o[21];
-  assign VCRX2_L=gpio_o[22];
-  assign VCTX2_H=gpio_o[23];
-  assign VCTX2_L=gpio_o[24];
-  
+ 
 
   system_wrapper i_system_wrapper (
     .ddr_addr (ddr_addr),
